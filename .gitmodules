@@ -1,3 +1,0 @@
-[submodule "llm/rag/easy-local-rag"]
-	path = llm/rag/easy-local-rag
-	url = https://github.com/AllAboutAI-YT/easy-local-rag

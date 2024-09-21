@@ -3,6 +3,7 @@
 
 # Environment variables
 **/.env
+llm/rag/easy-local-rag/.env
 
 # Virtual environments
 **/.venv/
