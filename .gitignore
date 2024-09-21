@@ -15,3 +15,8 @@
 **/*.pyo
 **/*.pyd
 
+# Python egg-info directories
+**/*.egg-info/
+
+
+

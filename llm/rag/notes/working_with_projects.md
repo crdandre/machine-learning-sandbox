@@ -11,3 +11,6 @@ Approach: n8n is orchestrator tool, supabase has inbuilt postgres for chat histo
 ![alt text](n8n_rag.png)
 Database: Supabase, postgres for chat history, supabase vector store for embeddings
 Experience. Works! Uploading one file at a time to google drive adds each to the vector db. I had to modify it from the [video](https://youtu.be/PEI_ePNNfJQ?si=wEYkQESJMmIBhXL0) to make it work with pdfs instead of just text. This would require additional features for batch uploads, varied filetypes (pdf, doc, csv, pptx, md).
+
+## 3. [ell-rag](llm/rag/ell-rag)
+Approach: I aim to write RAG pipelines using [ell](https://github.com/MadcowD/ell) to get familiar with building these projects. It seems simpler than [LangChain](https://www.langchain.com/), i.e. the abstractions line up better with the human thought process of working with an LLM it seems. I'll build 3 variations, building in complexity and production-readiness.
