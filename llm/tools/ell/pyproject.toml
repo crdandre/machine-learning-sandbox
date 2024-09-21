@@ -1,0 +1,60 @@
+[tool.poetry]
+name = "ell-ai"
+version = "0.0.6"
+description = "ell - the language model programming library"
+authors = ["William Guss <will@lrsys.xyz>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/MadcowD/ell"
+packages = [
+    { include = "ell", from = "src" }
+]
+homepage = "https://docs.ell.so"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9"
+]
+include = [
+    { path = "src/ell/studio/static", format = ["sdist", "wheel"] },
+    { path = "src/ell/studio/static/**/*", format = ["sdist", "wheel"] }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+fastapi = "^0.111.1"
+numpy = "^2.0.1"
+dill = "^0.3.8"
+colorama = "^0.4.6"
+cattrs = "^23.2.3"
+openai = "^1.40.6"
+sqlmodel = "^0.0.21"
+uvicorn = "^0.30.3"
+requests = "^2.32.3"
+typing-extensions = "^4.12.2"
+
+
+black = "^24.8.0"
+json-fix = "^1.0.0"
+pillow = "^10.4.0"
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
+
+sphinx = "<8.0.0"
+sphinx-rtd-theme = "^2.0.0"
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+
+[tool.poetry.scripts]
+ell-studio = "ell.studio.__main__:main"
+
+
+# [tool.poetry.build]
+# # script = "build.py"
