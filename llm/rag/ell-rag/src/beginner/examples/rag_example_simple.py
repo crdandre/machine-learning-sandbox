@@ -3,8 +3,12 @@ Based on examples/rag.py from the ell repository
 
 1. Create vector store class. In this case the TfidfVectorizer from sklearn.feature_extraction.text is used. 
 2. The function cosine_similarity from sklearn.metrics.pairwise is used to match query vectors to existing vectors in the database
-3. 
+3. The VectorStore is created at runtime 
+4. Invocations are stored in ./logdir local sqlite db
 """
+from dotenv import load_dotenv
+load_dotenv()
+import ell
 
 # you'll need to install sklearn as its not a dependency of ell
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -12,6 +16,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from ell import ell
 
+ell.init(store="./logdir", autocommit=True)
 
 class VectorStore:
     def __init__(self, vectorizer, tfidf_matrix, documents):
@@ -76,3 +81,7 @@ if __name__ == "__main__":
     context = vector_store.search(query)
 
     question2 = rag(query, context)
+    
+    query = "what does it mean to say that a vector_store is created at runtime?"
+    context = None
+    question3 = rag(query, context)
