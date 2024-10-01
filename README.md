@@ -13,10 +13,12 @@ To learn a topic, you can try to work with the repositories in the same order I 
         2. [n8n-supabase-rag](https://www.youtube.com/watch?v=PEI_ePNNfJQ)
         3. [ell-rag-simple](llm/rag/ell-rag-simple)
         4. [ActiveRAG](https://github.com/OpenMatch/ActiveRAG)
-    2. Agents (Including Agentic RAG)
+    2. Science (Including Agentic RAG)
         1. [AI-Scientist @ 8383c8a](https://github.com/SakanaAI/AI-Scientist)
         2. [show-me](https://github.com/marlaman/show-me.git)
-    3. Other
+    3. Agents
+        1. [o1-engineer](https://github.com/Doriandarko/o1-engineer)
+        2. [openinterpreter](https://github.com/OpenInterpreter/open-interpreter)
 4. RL
 
 ## Tools
