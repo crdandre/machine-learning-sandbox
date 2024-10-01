@@ -8,15 +8,18 @@ Based on examples/rag.py from the ell repository
 """
 from dotenv import load_dotenv
 load_dotenv()
-import ell
 
-# you'll need to install sklearn as its not a dependency of ell
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from ell import ell
 
 ell.init(store="./logdir", autocommit=True)
+
+OLLAMA_HOST = "http://localhost:11434/v1"
+MODEL = "llama3.1:latest"
+TEMPERATURE = 0.3
+ell.models.ollama.register(OLLAMA_HOST)
 
 class VectorStore:
     def __init__(self, vectorizer, tfidf_matrix, documents):
@@ -40,7 +43,7 @@ class VectorStore:
         ]
 
 
-@ell.simple(model="gpt-4o-mini")
+@ell.simple(model=MODEL, temperature=TEMPERATURE)
 def rag(query: str, context: str) -> str:
     """You are an AI assistant using Retrieval-Augmented Generation (RAG).
     RAG enhances your responses by retrieving relevant information from a knowledge base.
