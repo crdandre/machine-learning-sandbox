@@ -28,19 +28,26 @@ import torch
 from torch import optim, nn
 from torch.utils.data import DataLoader, random_split
 from tqdm import tqdm
+import argparse
 
 from unet import UNet
 from carvana_dataset import CarvanaDataset
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--epochs', type=int, default=2)
+    parser.add_argument('--batch-size', type=int, default=16)
+    parser.add_argument('--max-images', type=int, default=None)
+    args = parser.parse_args()
+    
     LEARNING_RATE = 3e-4
-    BATCH_SIZE = 16
-    EPOCHS = 2
+    BATCH_SIZE = args.batch_size
+    EPOCHS = args.epochs
     DATA_PATH = "./data"
     MODEL_SAVE_PATH = "./unet.pth"
     
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    train_dataset = CarvanaDataset(DATA_PATH)
+    train_dataset = CarvanaDataset(DATA_PATH, max_images=args.max_images)
     
     generator = torch.Generator().manual_seed(42)
     train_dataset, val_dataset = random_split(train_dataset, [0.8, 0.2], generator=generator)

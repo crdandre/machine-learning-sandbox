@@ -1,26 +1,13 @@
 """
-Notes:
+Given running list_gpus.py and getting this:
 
-1. BCEWithLogitsLoss?
---> Commonly used for binary classification problems, measures distance from true binary value
---> sigmoid + binary cross entropy
+PyTorch method:
+GPU 0: NVIDIA GeForce RTX 3090 (Memory: 23.7GB)
+GPU 1: NVIDIA GeForce RTX 3090 (Memory: 23.7GB)
+GPU 2: Tesla P100-PCIE-16GB (Memory: 15.9GB)
 
-2. What is binary cross-entropy?
---> BCE = -(y * log(p) + (1-y) * log(1-p))
-        Where:
-        y = true label (0 or 1)
-        p = predicted probability (between 0 and 1)
-    i.e., the difference between two prob. dists.
-    read more on why this is the way it is...lol
-    
-    
-3. Training vs Validation?
-My first thought is why both are needed? 
-In a one-epoch tranining run, the advantage of evaluating model performance on unseen samples is not there. Validation only offers batch-order bias mitigation and other mitigation due to differences in model.train() vs model.eval()
---> training forward-passes w/random dropout (sets activations to zero), measures loss, then backprops to update weights
---> eval does not do this, it forward-passes every eval sample and measures loss, no backprop
---> torch.no_grad() prevents gradient computation during the forward pass, which means backpropagation isn't possible because there are no gradients to propagate back.
-
+This command runs this training script on 2x 3090:
+CUDA_VISIBLE_DEVICES=1,2 torchrun --nproc_per_node=2 main_parallel.py
 """
 
 
@@ -32,14 +19,21 @@ from torch.utils.data.distributed import DistributedSampler
 from torch import optim, nn
 from torch.utils.data import DataLoader, random_split
 from tqdm import tqdm
+import argparse
 
 from unet import UNet
 from carvana_dataset import CarvanaDataset
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--epochs', type=int, default=2)
+    parser.add_argument('--batch-size', type=int, default=16)
+    parser.add_argument('--max-images', type=int, default=None)
+    args = parser.parse_args()
+    
     LEARNING_RATE = 3e-4
-    BATCH_SIZE = 16
-    EPOCHS = 2
+    BATCH_SIZE = args.batch_size
+    EPOCHS = args.epochs
     DATA_PATH = "./data"
     MODEL_SAVE_PATH = "./unet.pth"
     
@@ -49,7 +43,7 @@ if __name__ == "__main__":
     torch.cuda.set_device(local_rank)
     device = torch.device(f"cuda:{local_rank}")
     
-    train_dataset = CarvanaDataset(DATA_PATH)
+    train_dataset = CarvanaDataset(DATA_PATH, max_images=args.max_images)
     
     generator = torch.Generator().manual_seed(42)
     train_dataset, val_dataset = random_split(train_dataset, [0.8, 0.2], generator=generator)
