@@ -16,7 +16,11 @@ Notes:
 --> this is all managed internally (lends itself to doing this from scratch to have intuition!)
 
 4. Why ReLU afer Conv2d? / Why Double Conv?
---> introduces nonlinearity (conv only would prevent unet from capturing nonlinearity)
+--> relu after conv is empirical, but helps model performance. can help avoid vanishing gradients compared to sigmoid activation function, introduces nonlinearity (any activation fxn would though), creates more sparse activations, can assist in feature filtering, possibly reduces overfitting by forcing more-so that only important features contribute to predictions (as less important would be zeroed-out, so this is considered a form of regularization)
+    --> regularization is 
+        --> explicit: l1/l2, dropout, batch/data normalization, early stopping in training
+        --> implicit: relu, skip connections?
+    --> by zeroing out small values below the bias the essence of the data is better understood and generalizable rather than memorized with many small weights that would not generalize well
 --> double conv is empirical design choice - just a dimension to play with
 
 5. Why cat x1/2?
