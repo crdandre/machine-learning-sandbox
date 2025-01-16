@@ -12,7 +12,11 @@ Notes:
 --> every Conv2d layer is initialized with random weights by default
 
 3. Why does unet skip-connect like-sized layers from contracting and expanding paths??
---> 
+--> The skip connections smash together downsampled feature maps and the upsampled feature maps "imprecisely". These are an empirically added technique which adds another information "perspective" to the upsampling.
+--> Without skip connections, the network would be a more basic sequential encoder-decoder network (can be a "line" since skip connections no longer necessitate the "U")
+
+4. Why are kernel sizes starting at 64 and doubling/halving?
+--> Arbitrary lol. In theory it could be any sequence I think. Doubling and halving seems to be most common and effective.
 
 """
 import torch

@@ -11,7 +11,7 @@ def run_benchmark(num_epochs=1, batch_size=16, max_images=1000):
     start_time = time.time()
     subprocess.run([
         "python", 
-        "main_single.py",
+        "train_single.py",
         f"--epochs={num_epochs}",
         f"--batch-size={batch_size}",
         f"--max-images={max_images}"
@@ -25,7 +25,7 @@ def run_benchmark(num_epochs=1, batch_size=16, max_images=1000):
     subprocess.run([
         "torchrun",
         "--nproc_per_node=2",
-        "main_parallel.py",
+        "train_parallel.py",
         f"--epochs={num_epochs}",
         f"--batch-size={batch_size}",
         f"--max-images={max_images}"
