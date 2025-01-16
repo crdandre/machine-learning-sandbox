@@ -2,6 +2,7 @@ import subprocess
 import time
 from datetime import datetime
 import json
+import os
 
 def run_benchmark(num_epochs=1, batch_size=16, max_images=1000):
     results = {}
@@ -41,7 +42,12 @@ def run_benchmark(num_epochs=1, batch_size=16, max_images=1000):
         'batch_size': batch_size
     }
     
-    with open(f'benchmark_results_{timestamp}.json', 'w') as f:
+    # Create benchmark_results directory if it doesn't exist
+    os.makedirs('benchmark_results', exist_ok=True)
+    
+    # Save to the benchmark_results directory
+    output_path = os.path.join('benchmark_results', f'benchmark_results_{timestamp}.json')
+    with open(output_path, 'w') as f:
         json.dump(results, f, indent=4)
     
     # Print summary

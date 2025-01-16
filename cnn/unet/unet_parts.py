@@ -15,8 +15,9 @@ Notes:
 --> in this case, the weights of the network are the values of the convolution kernels themselves! and each kernel gets one bias to adjust the magnitude of it's influence on what features "pass" the ReLU threshold (0). Also a learnable parameter for when a feature detector is useful (i.e. same feature in low vs high contrast - avoiding false positive by adjusting sensitivity)
 --> this is all managed internally (lends itself to doing this from scratch to have intuition!)
 
-4. Why ReLU afer Conv2d?
---> introduces nonlinearity (conv only would )
+4. Why ReLU afer Conv2d? / Why Double Conv?
+--> introduces nonlinearity (conv only would prevent unet from capturing nonlinearity)
+--> double conv is empirical design choice - just a dimension to play with
 
 5. Why cat x1/2?
 --> part of more information "perspective" to feed into transpose convs, it's "messy" but combines encoder info about objects and positions with pixel-level segmentation info from the decoder as the decoding continues
